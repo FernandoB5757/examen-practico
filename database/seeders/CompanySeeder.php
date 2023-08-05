@@ -14,7 +14,11 @@ class CompanySeeder extends Seeder
     public function run(): void
     {
         Company::factory()
-            ->count(10)
+            ->create(["name" => "Netcommerce"]);
+        Company::factory()
+            ->create(["name" => "Company Example"]);
+        Company::factory()
+            ->count(8)
             ->create();
     }
 }
