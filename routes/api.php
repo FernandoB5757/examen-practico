@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\V1\TaskController;
+use App\Http\Controllers\TaskAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::apiResource('/tasks', TaskController::class)->only(['index']);
+Route::get('/companies', [TaskController::class, 'companies']);
+Route::post('/tasks/create', [TaskController::class, 'create']);

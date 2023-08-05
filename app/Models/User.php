@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,6 +47,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * Maximo de actividades que se le pueden asignar
+     * @var int
+     */
+    const MAX_TASKS = 5;
 
     /**
      * HasMany tasks
@@ -51,5 +59,15 @@ class User extends Authenticatable
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
+    }
+
+    /**
+     * Query para cantidad de tasks no finalizadas.
+     */
+    public function scopeCountTasksNotCompleted(Builder $query): void
+    {
+        $query->withCount(['tasks', 'tasks as pending_tasks_count' => function (Builder $query) {
+            $query->where('is_completed', false);
+        }]);
     }
 }
