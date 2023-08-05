@@ -27,7 +27,7 @@ class TaskSeeder extends Seeder
         $company = Company::find($company_id);
 
         if ($user && $company)
-            Task::factory($cont)->create([
+            Task::factory($cont)->conExpiracion(5)->create([
                 'user_id' => $user_id,
                 'company_id' => $company_id
             ]);

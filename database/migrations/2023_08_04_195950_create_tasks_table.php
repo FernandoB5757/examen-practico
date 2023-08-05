@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreignId('company_id')->constrained(table: 'companies');
             $table->string('name', 255);
             $table->text('description')->nullable();
+            $table->boolean('is_completed')->default(false);
+            $table->dateTime('start_at');
+            $table->dateTime('expired_at')->nullable();
             $table->timestamps();
         });
     }
